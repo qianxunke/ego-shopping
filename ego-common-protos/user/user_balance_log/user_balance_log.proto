@@ -1,0 +1,85 @@
+syntax = "proto3";
+
+package user_balance_log;
+service UserBalanceService {
+    //获取信息
+    rpc GetUserBalanceInfoById (In_GetUserBalanceInfoById) returns (Out_GetUserBalanceInfoById) {
+    }
+    //修改信息
+    rpc UpdateUserBalanceInfo (In_UpdateUserBalanceInfo) returns (Out_UpdateUserBalanceInfo) {
+    }
+    //获取列表
+    rpc GetUserBalances (In_GetUserBalances) returns (Out_GetUserBalances) {
+    }
+    //删除列表
+    rpc DeleteUserBalances (In_DeleteUserBalances) returns (Out_DeleteUserBalances) {
+    }
+    //新建信息
+    rpc CreateUserBalance (In_CreateUserBalance) returns (Out_CreateUserBalance) {
+    }
+}
+message Error {
+    int32 code = 1;
+    string message = 2;
+}
+message User_balance_log {
+    int64 balance_id = 1;
+    int64 user_id = 2;
+    int64 source = 3;
+    int64 source_sn = 4;
+    string create_time = 5;
+    double amount = 6;
+    string user_name = 7;
+}
+
+message In_GetUserBalanceInfoById {
+    //通过id
+    int64 balance_id = 1;
+}
+
+message Out_GetUserBalanceInfoById {
+    Error error = 1;
+    User_balance_log user_balance_log = 2;
+}
+
+
+message Out_UpdateUserBalanceInfo {
+    Error error = 1;
+    User_balance_log user_balance_log = 2;
+}
+
+message In_UpdateUserBalanceInfo {
+    User_balance_log user_balance_log = 1;
+}
+message In_GetUserBalances {
+    int64 limit = 1;
+    int64 pages = 2;
+    string search_key = 3;
+    string start_time = 4;
+    string end_time = 5;
+}
+
+message Out_GetUserBalances {
+    Error error = 1;
+    int64 limit = 2;
+    int64 pages = 3;
+    int64 total = 4;
+    repeated User_balance_log user_balance_log_list = 5;
+}
+
+message In_DeleteUserBalances {
+    repeated int64 user_balance_logs = 1;
+}
+
+message Out_DeleteUserBalances {
+    Error error = 1;
+}
+
+
+message In_CreateUserBalance {
+    User_balance_log user_balance_log = 1;
+}
+message Out_CreateUserBalance {
+    Error error = 1;
+    User_balance_log user_balance_log = 2; //等级信息
+}

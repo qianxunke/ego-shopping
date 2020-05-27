@@ -1,0 +1,102 @@
+syntax = "proto3";
+package user_addr;
+service UserAddrService {
+    //获取信息
+    rpc GetUserAddrInfoById (In_GetUserAddrInfoById) returns (Out_GetUserAddrInfoById) {
+    }
+    //修改信息
+    rpc UpdateUserAddrInfo (In_UpdateUserAddrInfo) returns (Out_UpdateUserAddrInfo) {
+    }
+    //获取列表
+    rpc GetUserAddrs (In_GetUserAddrs) returns (Out_GetUserAddrs) {
+    }
+    //删除列表
+    rpc DeleteUserAddrs (In_DeleteUserAddrs) returns (Out_DeleteUserAddrs) {
+    }
+    //新建信息
+    rpc CreateUserAddr (In_CreateUserAddr) returns (Out_CreateUserAddr) {
+    }
+    //获取某人地址列表
+    rpc GetOneUserAddrs(In_GetOneUserAddrs) returns (Out_GetOneUserAddrs){}
+}
+
+message Error {
+    int32 code = 1;
+    string message = 2;
+}
+message User_addr {
+    int64 user_addr_id = 1;
+    int64 user_id = 2;
+    int64 zip = 3;
+    string province = 4;
+    string city = 5;
+    string district = 6;
+    string address = 7;
+    int64 is_default = 8;
+    string modified_time = 9;
+}
+
+message In_GetUserAddrInfoById {
+    int64 user_addr_id = 1;
+}
+
+message Out_GetUserAddrInfoById {
+    Error error = 1;
+    User_addr user_addr = 2;
+}
+
+
+message Out_UpdateUserAddrInfo {
+    Error error = 1;
+    User_addr user_addr = 2;
+}
+
+message In_UpdateUserAddrInfo {
+    User_addr user_addr = 1;
+}
+message In_GetUserAddrs {
+    int64 limit = 1;
+    int64 pages = 2;
+    string search_key = 3;
+    string start_time = 4;
+    string end_time = 5;
+}
+
+message Out_GetUserAddrs {
+    Error error = 1;
+    int64 limit = 2;
+    int64 pages = 3;
+    int64 total = 4;
+    repeated User_addr user_addr_list = 5;
+}
+
+message In_DeleteUserAddrs {
+    repeated int64 user_addr_list = 1;
+}
+
+message Out_DeleteUserAddrs {
+    Error error = 1;
+}
+
+
+message In_CreateUserAddr {
+    User_addr user_addr = 1;
+}
+message Out_CreateUserAddr {
+    Error error = 1;
+    User_addr user_addr = 2;
+}
+
+message In_GetOneUserAddrs{
+    int64 user_id=1;
+    int64 limit = 2;
+    int64 pages = 3;
+}
+
+message Out_GetOneUserAddrs{
+    Error error=1;
+    int64 limit = 2;
+    int64 pages = 3;
+    int64 total = 4;
+    repeated  User_addr user_addr_list=5;
+}

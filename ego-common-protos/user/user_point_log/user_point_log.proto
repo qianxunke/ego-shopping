@@ -1,0 +1,83 @@
+syntax = "proto3";
+package user_point_log;
+service UserPointLogService {
+    //获取信息
+    rpc GetUserPointLogInfoById (In_GetUserPointLogInfoById) returns (Out_GetUserPointLogInfoById) {
+    }
+    //修改信息
+    rpc UpdateUserPointLogInfo (In_UpdateUserPointLogInfo) returns (Out_UpdateUserPointLogInfo) {
+    }
+    //获取列表
+    rpc GetUserPointLogs (In_GetUserPointLogs) returns (Out_GetUserPointLogs) {
+    }
+    //删除列表
+    rpc DeleteUserPointLogs (In_DeleteUserPointLogs) returns (Out_DeleteUserPointLogs) {
+    }
+    //新建信息
+    rpc CreateUserPointLog (In_CreateUserPointLog) returns (Out_CreateUserPointLog) {
+    }
+}
+message Error {
+    int32 code = 1;
+    string message = 2;
+}
+message User_point_log {
+    int64 point_id = 1;
+    int64 user_id = 2;
+    int64 source = 3;
+    int64 refer_number = 4;
+    int64 change_point = 5;
+    string create_time = 6;
+}
+
+message In_GetUserPointLogInfoById {
+    //通过id
+    int64 point_id = 1;
+}
+
+message Out_GetUserPointLogInfoById {
+    Error error = 1;
+    User_point_log user_point_log = 2;
+}
+
+
+message Out_UpdateUserPointLogInfo {
+    Error error = 1;
+    User_point_log user_point_log = 2;
+}
+
+message In_UpdateUserPointLogInfo {
+    User_point_log user_point_log = 1;
+}
+message In_GetUserPointLogs {
+    int64 limit = 1;
+    int64 pages = 2;
+    string search_key = 3;
+    string start_time = 4;
+    string end_time = 5;
+}
+
+message Out_GetUserPointLogs {
+    Error error = 1;
+    int64 limit = 2;
+    int64 pages = 3;
+    int64 total = 4;
+    repeated User_point_log user_point_log_list = 5;
+}
+
+message In_DeleteUserPointLogs {
+    repeated int64  user_point_logs = 1;
+}
+
+message Out_DeleteUserPointLogs {
+    Error error = 1;
+}
+
+
+message In_CreateUserPointLog {
+    User_point_log user_point_log_log = 1;
+}
+message Out_CreateUserPointLog {
+    Error error = 1;
+    User_point_log user_point_log = 2; //信息
+}
