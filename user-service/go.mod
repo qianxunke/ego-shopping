@@ -1,12 +1,25 @@
 module ego-user-service
 
-go 1.13
+go 1.14
 
 require (
-	github.com/golang/protobuf v1.3.3
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
+	github.com/go-log/log v0.2.0
+	github.com/go-redis/redis v6.15.8+incompatible
+	github.com/go-sql-driver/mysql v1.4.1
+	github.com/grpc-ecosystem/grpc-gateway v1.14.6 // indirect
 	github.com/jinzhu/gorm v1.9.12 // indirect
 	github.com/kataras/golog v0.0.15 // indirect
-	github.com/micro/go-micro v1.18.0 // indirect
-	google.golang.org/genproto v0.0.0-20191108220845-16a3f7862a1a
-	google.golang.org/grpc v1.29.0
+	github.com/lib/pq v1.2.0 // indirect
+	github.com/onsi/ginkgo v1.12.2 // indirect
+	github.com/qianxunke/ego-shopping v0.0.0-20200527072247-4480a588825a
+	github.com/qianxunke/ego-shopping/ego-plugins v0.0.0-00010101000000-000000000000
+	github.com/satori/go.uuid v1.2.0
+	google.golang.org/appengine v1.5.0 // indirect
+	google.golang.org/grpc v1.29.1
+)
+
+replace (
+	github.com/qianxunke/ego-shopping/ego-common-protos => ../ego-common-protos
+	github.com/qianxunke/ego-shopping/ego-plugins => ../ego-plugins
 )

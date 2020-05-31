@@ -1,0 +1,95 @@
+syntax = "proto3";
+//存储产品参数信息
+
+option go_package = "go_out/inventory/product_attribute_value";  //输出作为输出路径
+option java_multiple_files = true;
+option java_package = "com.qianxunke.ego.inventory.product_attribute_value";
+option java_outer_classname = "ProductAttributeValue";
+
+package product_attribute_value;
+
+service ProductAttributeValueHandler {
+    //获取信息
+    rpc GetProductAttributeValueById (In_GetProductAttributeValueById) returns (Out_GetProductAttributeValueById) {
+    }
+    //修改信息
+    rpc UpdateProductAttributeValueInfo (In_UpdateProductAttributeValueInfo) returns (Out_UpdateProductAttributeValueInfo) {
+    }
+    //获取列表
+    rpc GetProductAttributeValues (In_GetProductAttributeValues) returns (Out_GetProductAttributeValues) {
+    }
+    //删除列表
+    rpc DeleteProductAttributeValues (In_DeleteProductAttributeValues) returns (Out_DeleteProductAttributeValues) {
+    }
+    //新建信息
+    rpc CreateProductAttributeValue (In_CreateProductAttributeValue) returns (Out_CreateProductAttributeValue) {
+    }
+}
+
+//
+message Product_attribute_value {
+    int64 id = 1;
+    string product_id = 2; //
+    int64 product_attribute_id = 3;
+    string value = 5;
+
+}
+
+message Error {
+    int32 code = 1;
+    string message = 2;
+}
+message In_GetProductAttributeValueById {
+    int64 id = 1;
+}
+
+message Out_GetProductAttributeValueById {
+    Error error = 1;
+    Product_attribute_value product_attribute_value = 2;
+}
+
+message Out_UpdateProductAttributeValueInfo {
+    Error error = 1;
+    Product_attribute_value product_attribute_value = 2;
+}
+
+message In_UpdateProductAttributeValueInfo {
+    Product_attribute_value product_attribute_value = 1;
+}
+
+
+message In_GetProductAttributeValues {
+    int64 limit = 1;
+    int64 pages = 2;
+    string search_key = 3;
+    string start_time = 4;
+    string end_time = 5;
+}
+
+message Out_GetProductAttributeValues {
+    Error error = 1;
+    int64 limit = 2;
+    int64 pages = 3;
+    int64 total = 4;
+    repeated Product_attribute_value product_attribute_value_list = 5;
+}
+
+message In_DeleteProductAttributeValues {
+    repeated int64 product_attribute_value_list = 1;
+}
+
+message Out_DeleteProductAttributeValues {
+    Error error = 1;
+}
+
+
+message In_CreateProductAttributeValue {
+    Product_attribute_value product_attribute_value = 1;
+}
+message Out_CreateProductAttributeValue {
+    Error error = 1;
+    Product_attribute_value product_attribute_value = 2;
+}
+
+
+

@@ -1,0 +1,124 @@
+syntax = "proto3";
+
+option go_package = "go_out/inventory/product_sku_stock";  //输出作为输出路径
+option java_multiple_files = true;
+option java_package = "com.qianxunke.ego.inventory.product_sku_stock";
+option java_outer_classname = "ProductSkuStock";
+
+
+package product_sku_stock;
+service ProductSkuStockHandler {
+    //获取信息
+    rpc GetProductSkuStockById (In_GetProductSkuStockById) returns (Out_GetProductSkuStockById) {
+    }
+    //修改信息
+    rpc UpdateProductSkuStockInfo (In_UpdateProductSkuStockInfo) returns (Out_UpdateProductSkuStockInfo) {
+    }
+    //获取列表
+    rpc GetProductSkuStocks (In_GetProductSkuStocks) returns (Out_GetProductSkuStocks) {
+    }
+    //删除列表
+    rpc DeleteProductSkuStocks (In_DeleteProductSkuStocks) returns (Out_DeleteProductSkuStocks) {
+    }
+    //新建信息
+    rpc CreateProductSkuStock (In_CreateProductSkuStock) returns (Out_CreateProductSkuStock) {
+    }
+
+    rpc GetSellSkuStock (In_GetSellSkuStock) returns (Out_GetSellSkuStock) {
+    }
+}
+
+//sku的库存
+message Product_sku_stock {
+    int64 id = 1;
+    string product_id = 2; //商品属性id
+    string sku_code = 3; //sku编码
+    float price = 4; //价格
+    int64 stock = 5; //库存
+    string sp1 = 6; //销售属性1
+    string sp2 = 7; //销售属性2
+    string sp3 = 8; //销售属性3
+    string pic = 9; //展示图片
+    int64 sale = 10;
+    float promotion_price = 11; //单品促销价格
+    int64 lock_stock = 12; //锁定库存
+    int64 low_stock = 13; //预警数量
+}
+
+message Sku_out_log {
+    int64 id = 1;
+    string product_id = 2; //商品id
+    int64 member_id = 3; //
+    int64 sell_num = 4;
+    int64 sku_id = 5;
+    int64 order_id = 6;
+    float sku_price = 7;
+    float total_amount = 8;
+    string create_time = 9;
+}
+
+
+message Error {
+    int32 code = 1;
+    string message = 2;
+}
+message In_GetProductSkuStockById {
+    int64 id = 1;
+}
+
+message Out_GetProductSkuStockById {
+    Error error = 1;
+    Product_sku_stock product_sku_stock = 2;
+}
+
+message Out_UpdateProductSkuStockInfo {
+    Error error = 1;
+    Product_sku_stock product_sku_stock = 2;
+}
+
+message In_UpdateProductSkuStockInfo {
+    Product_sku_stock product_sku_stock = 1;
+}
+
+
+message In_GetProductSkuStocks {
+    string product_id = 1;
+}
+
+message Out_GetProductSkuStocks {
+    Error error = 1;
+    int64 limit = 2;
+    int64 pages = 3;
+    int64 total = 4;
+    repeated Product_sku_stock product_sku_stock_list = 5;
+}
+
+message In_DeleteProductSkuStocks {
+    repeated int64 product_sku_stock_list = 1;
+}
+
+message Out_DeleteProductSkuStocks {
+    Error error = 1;
+}
+
+
+message In_CreateProductSkuStock {
+    Product_sku_stock product_sku_stock = 1;
+}
+message Out_CreateProductSkuStock {
+    Error error = 1;
+    Product_sku_stock product_sku_stock = 2;
+}
+
+//拿库存
+message In_GetSellSkuStock {
+    int64 id = 1;
+    int64 member_id = 2;
+    string product_id = 3;
+    int64 sell_num = 4;
+}
+
+message Out_GetSellSkuStock {
+    Sku_out_log sku_out_log = 1;
+    Error error = 2;
+}

@@ -1,0 +1,126 @@
+syntax = "proto3";
+//产品分类
+
+option go_package = "go_out/inventory/product_category";  //输出作为输出路径
+option java_multiple_files = true;
+option java_package = "com.qianxunke.ego.inventory.product_category";
+option java_outer_classname = "ProductCategory";
+
+
+package product_category;
+
+service ProductCategoryHandler {
+    //获取信息
+    rpc GetProductCategoryById (In_GetProductCategoryById) returns (Out_GetProductCategoryById) {
+    }
+    //修改信息
+    rpc UpdateProductCategoryInfo (In_UpdateProductCategoryInfo) returns (Out_UpdateProductCategoryInfo) {
+    }
+    //获取列表
+    rpc GetProductCategorys (In_GetProductCategorys) returns (Out_GetProductCategorys) {
+    }
+    //删除列表
+    rpc DeleteProductCategorys (In_DeleteProductCategorys) returns (Out_DeleteProductCategorys) {
+    }
+    //新建信息
+    rpc CreateProductCategory (In_CreateProductCategory) returns (Out_CreateProductCategory) {
+    }
+    //获取类别详情
+    rpc GetProductCategoryDetailsList (In_GetProductCategoryDetailsList) returns (Out_GetProductCategoryDetailsList) {
+    }
+}
+
+//
+message Product_category {
+    int64 id = 1;
+    int64 parent_id = 2; //上级分类的编号：0表示一级分类
+    string name = 3;
+    string level = 4; //分类级别：0->1级；1->2级
+    string product_count = 5; //
+    int64 product_unit = 6; //
+    int64 nav_status = 7; //是否显示在导航栏：0->不显示；1->显示
+    int64 show_status = 8; //显示状态：0->不显示；1->显示
+    int64 sort = 9; //
+    string icon = 10; //图标
+    string keywords = 11; //
+    string description = 12;
+    string created_time=13;
+}
+
+message Product_category_details {
+    int64 id = 1;
+    string name = 2;
+    int64 child_id = 3;
+    string child_name = 4;
+}
+
+message Out_GetProductCategoryDetailsList{
+    Error error = 1;
+    int64 limit = 2;
+    int64 pages = 3;
+    int64 total = 4;
+    repeated Product_category_details product_category_list = 5;
+}
+
+message In_GetProductCategoryDetailsList{
+
+}
+
+message Error {
+    int32 code = 1;
+    string message = 2;
+}
+message In_GetProductCategoryById {
+    int64 id = 1;
+}
+
+message Out_GetProductCategoryById {
+    Error error = 1;
+    Product_category product_category = 2;
+}
+
+message Out_UpdateProductCategoryInfo {
+    Error error = 1;
+    Product_category product_category = 2;
+}
+
+message In_UpdateProductCategoryInfo {
+    Product_category product_category = 1;
+}
+
+
+message In_GetProductCategorys {
+    int64 limit = 1;
+    int64 pages = 2;
+    string search_key = 3;
+    string start_time = 4;
+    string end_time = 5;
+}
+
+message Out_GetProductCategorys {
+    Error error = 1;
+    int64 limit = 2;
+    int64 pages = 3;
+    int64 total = 4;
+    repeated Product_category product_category_list = 5;
+}
+
+message In_DeleteProductCategorys {
+    repeated int64 product_category_list = 1;
+}
+
+message Out_DeleteProductCategorys {
+    Error error = 1;
+}
+
+
+message In_CreateProductCategory {
+    Product_category product_category = 1;
+}
+message Out_CreateProductCategory {
+    Error error = 1;
+    Product_category product_category = 2;
+}
+
+
+

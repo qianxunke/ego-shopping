@@ -1,8 +1,10 @@
 package main
 
 import (
-	"ego-user-service/modules/user_info"
+	"ego-user-service/clients"
+	"ego-user-service/modules"
 	"ego-user-service/modules/user_info/service"
+	"github.com/qianxunke/ego-shopping/ego-common-protos/out/user_info"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 	"log"
@@ -10,6 +12,9 @@ import (
 )
 
 func main() {
+	//初始化
+	clients.Init()
+	modules.Init()
 	lis, err := net.Listen("tcp", "localhost:8080")
 	if err != nil {
 		log.Fatalf("err: v", err)
@@ -17,8 +22,12 @@ func main() {
 	}
 
 	s := grpc.NewServer()
-
-	user_info.RegisterUserInfoServer(s, &service.UserInfoService{})
+	userInfoService, err := service.GetService()
+	if err != nil {
+		log.Fatal("userInfoService init error")
+		return
+	}
+	user_info.RegisterUserInfoServer(s, userInfoService)
 
 	reflection.Register(s)
 

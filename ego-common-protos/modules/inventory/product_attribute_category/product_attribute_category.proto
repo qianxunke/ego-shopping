@@ -1,0 +1,96 @@
+syntax = "proto3";
+//产品属性分类
+
+option go_package = "go_out/inventory/product_attribute_category";  //输出作为输出路径
+option java_multiple_files = true;
+option java_package = "com.qianxunke.ego.inventory.product_attribute_category";
+option java_outer_classname = "ProductAttributeCategory";
+
+
+package product_attribute_category;
+
+service ProductAttributeCategoryHandler {
+    //获取信息
+    rpc GetProductAttributeCategoryById (In_GetProductAttributeCategoryById) returns (Out_GetProductAttributeCategoryById) {
+    }
+    //修改信息
+    rpc UpdateProductAttributeCategoryInfo (In_UpdateProductAttributeCategoryInfo) returns (Out_UpdateProductAttributeCategoryInfo) {
+    }
+    //获取列表
+    rpc GetProductAttributeCategorys (In_GetProductAttributeCategorys) returns (Out_GetProductAttributeCategorys) {
+    }
+    //删除列表
+    rpc DeleteProductAttributeCategorys (In_DeleteProductAttributeCategorys) returns (Out_DeleteProductAttributeCategorys) {
+    }
+    //新建信息
+    rpc CreateProductAttributeCategory (In_CreateProductAttributeCategory) returns (Out_CreateProductAttributeCategory) {
+    }
+}
+
+//
+message Product_attribute_category {
+    int64 id = 1;
+    string name = 2; //
+    int64 attribute_count=3;
+    int64 param_count=4;
+    string created_time=5;
+}
+
+message Error {
+    int32 code = 1;
+    string message = 2;
+}
+message In_GetProductAttributeCategoryById {
+    int64 id = 1;
+}
+
+message Out_GetProductAttributeCategoryById {
+    Error error = 1;
+    Product_attribute_category product_attribute_category = 2;
+}
+
+message Out_UpdateProductAttributeCategoryInfo {
+    Error error = 1;
+    Product_attribute_category product_attribute_category = 2;
+}
+
+message In_UpdateProductAttributeCategoryInfo {
+    Product_attribute_category product_attribute_category = 1;
+}
+
+
+message In_GetProductAttributeCategorys {
+    int64 limit = 1;
+    int64 pages = 2;
+    string search_key = 3;
+    string start_time = 4;
+    string end_time = 5;
+}
+
+message Out_GetProductAttributeCategorys {
+    Error error = 1;
+    int64 limit = 2;
+    int64 pages = 3;
+    int64 total = 4;
+    repeated Product_attribute_category product_attribute_category_list = 5;
+}
+
+message In_DeleteProductAttributeCategorys {
+    repeated int64  product_attribute_category_list = 1;
+}
+
+message Out_DeleteProductAttributeCategorys {
+    Error error = 1;
+}
+
+
+message In_CreateProductAttributeCategory {
+    Product_attribute_category product_attribute_category = 1;
+}
+message Out_CreateProductAttributeCategory {
+    Error error = 1;
+    Product_attribute_category product_attribute_category = 2;
+}
+
+
+

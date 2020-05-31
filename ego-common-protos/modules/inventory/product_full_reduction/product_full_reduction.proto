@@ -1,0 +1,93 @@
+syntax="proto3";
+
+
+option go_package = "go_out/inventory/product_full_reduction";  //输出作为输出路径
+option java_multiple_files = true;
+option java_package = "com.qianxunke.ego.inventory.product_full_reduction";
+option java_outer_classname = "ProductFullReduction";
+
+
+package product_full_reduction;
+
+service ProductFullReductionHandler {
+    //获取信息
+    rpc GetProductFullReductionById (In_GetProductFullReductionById) returns (Out_GetProductFullReductionById) {
+    }
+    //修改信息
+    rpc UpdateProductFullReductionInfo (In_UpdateProductFullReductionInfo) returns (Out_UpdateProductFullReductionInfo) {
+    }
+    //获取列表
+    rpc GetProductFullReductions (In_GetProductFullReductions) returns (Out_GetProductFullReductions) {
+    }
+    //删除列表
+    rpc DeleteProductFullReductions (In_DeleteProductFullReductions) returns (Out_DeleteProductFullReductions) {
+    }
+    //新建信息
+    rpc CreateProductFullReduction (In_CreateProductFullReduction) returns (Out_CreateProductFullReduction) {
+    }
+}
+
+message Product_full_reduction {
+    int64 id = 1;
+    string product_id = 2;
+    float full_price = 3;
+    int64 reduce_price = 4;
+}
+
+message Error {
+    int32 code = 1;
+    string message = 2;
+}
+message In_GetProductFullReductionById {
+    int64 id = 1;
+}
+
+message Out_GetProductFullReductionById {
+    Error error = 1;
+    Product_full_reduction productFullReduction = 2;
+}
+
+message Out_UpdateProductFullReductionInfo {
+    Error error = 1;
+    Product_full_reduction productFullReduction = 2;
+}
+
+message In_UpdateProductFullReductionInfo {
+    Product_full_reduction productFullReduction = 1;
+}
+
+
+message In_GetProductFullReductions {
+    int64 limit = 1;
+    int64 pages = 2;
+    string search_key = 3;
+    string start_time = 4;
+    string end_time = 5;
+}
+
+message Out_GetProductFullReductions {
+    Error error = 1;
+    int64 limit = 2;
+    int64 pages = 3;
+    int64 total = 4;
+    repeated Product_full_reduction productFullReduction_list = 5;
+}
+
+message In_DeleteProductFullReductions {
+    repeated int64  ProductFullReduction_list = 1;
+}
+
+message Out_DeleteProductFullReductions {
+    Error error = 1;
+}
+
+
+message In_CreateProductFullReduction {
+    Product_full_reduction productFullReduction = 1;
+}
+message Out_CreateProductFullReduction {
+    Error error = 1;
+    Product_full_reduction productFullReduction = 2;
+}
+
+

@@ -1,0 +1,88 @@
+syntax = "proto3";
+
+option go_package = "go_out/user/user_login_log";  //输出作为输出路径
+option java_multiple_files = true;
+option java_package = "com.qianxunke.ego.user.login";
+option java_outer_classname = "UserLogin";
+option objc_class_prefix = "ULOGIN";
+
+package user_login_log;
+service UserLoginLogService {
+    //获取信息
+    rpc GetUserLoginLogInfoById (In_GetUserLoginLogInfoById) returns (Out_GetUserLoginLogInfoById) {
+    }
+    //修改信息
+    rpc UpdateUserLoginLogInfo (In_UpdateUserLoginLogInfo) returns (Out_UpdateUserLoginLogInfo) {
+    }
+    //获取列表
+    rpc GetUserLoginLogs (In_GetUserLoginLogs) returns (Out_GetUserLoginLogs) {
+    }
+    //删除列表
+    rpc DeleteUserLoginLogs (In_DeleteUserLoginLogs) returns (Out_DeleteUserLoginLogs) {
+    }
+    //新建信息
+    rpc CreateUserLoginLog (In_CreateUserLoginLog) returns (Out_CreateUserLoginLog) {
+    }
+}
+
+message User_login_log {
+    int64 login_id = 1;
+    string user_id = 2;
+    string login_time = 3;
+    string login_ip = 4;
+    int64 login_type = 5;
+}
+message Error {
+    int32 code = 1;
+    string message = 2;
+}
+message In_GetUserLoginLogInfoById {
+    int64 login_id = 1;
+}
+
+message Out_GetUserLoginLogInfoById {
+    Error error = 1;
+    User_login_log user_login_log = 2;
+}
+
+
+message Out_UpdateUserLoginLogInfo {
+    Error error = 1;
+    User_login_log user_login_log = 2;
+}
+
+message In_UpdateUserLoginLogInfo {
+    User_login_log user_login_log = 1;
+}
+message In_GetUserLoginLogs {
+    int64 limit = 1;
+    int64 pages = 2;
+    string search_key = 3;
+    string start_time = 4;
+    string end_time = 5;
+}
+
+message Out_GetUserLoginLogs {
+    Error error = 1;
+    int64 limit = 2;
+    int64 pages = 3;
+    int64 total = 4;
+    repeated User_login_log user_login_log_list = 5;
+}
+
+message In_DeleteUserLoginLogs {
+    repeated int64  user_login_log_list = 1;
+}
+
+message Out_DeleteUserLoginLogs {
+    Error error = 1;
+}
+
+
+message In_CreateUserLoginLog {
+    User_login_log user_login_log = 1;
+}
+message Out_CreateUserLoginLog {
+    Error error = 1;
+    User_login_log user_login_log = 2;
+}

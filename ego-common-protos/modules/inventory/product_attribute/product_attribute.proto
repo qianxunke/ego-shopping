@@ -1,0 +1,116 @@
+syntax = "proto3";
+
+
+option go_package = "go_out/inventory/product_attribute";  //输出作为输出路径
+option java_multiple_files = true;
+option java_package = "com.qianxunke.ego.inventory.product_attribute";
+option java_outer_classname = "productAttribute";
+
+
+package product_attribute;
+
+service ProductAttributeHandler {
+    //获取信息
+    rpc GetProductAttributeById (In_GetProductAttributeById) returns (Out_GetProductAttributeById) {
+    }
+    //修改信息
+    rpc UpdateProductAttributeInfo (In_UpdateProductAttributeInfo) returns (Out_UpdateProductAttributeInfo) {
+    }
+    //获取列表
+    rpc GetProductAttributes (In_GetProductAttributes) returns (Out_GetProductAttributes) {
+    }
+    //删除列表
+    rpc DeleteProductAttributes (In_DeleteProductAttributes) returns (Out_DeleteProductAttributes) {
+    }
+    //新建信息
+    rpc CreateProductAttribute (In_CreateProductAttribute) returns (Out_CreateProductAttribute) {
+    }
+    //获取列表
+    rpc GetProductAttributeList (In_GetProductAttributeList) returns (Out_GetProductAttributeList) {
+    }
+
+}
+
+//商品信息
+message Product_attribute {
+    int64 id = 1;
+    int64 product_attribute_category_id = 2; //商品属性id
+    string name = 3;
+    int64 select_type = 4; //属性选择类型：0->唯一；1->单选；2->多选
+    int64 input_type = 5; //属性录入方式：0->手工录入；1->从列表中选取
+    string input_list = 6; //可选值列表，以逗号隔开
+    int64 sort = 7; //排序字段：最高的可以单独上传图片
+    int64 filter_type = 8; //分类筛选样式：1->普通；1->颜色
+    int64 search_type = 9; //检索类型；0->不需要进行检索；1->关键字检索；2->范围检索
+    int64 related_status = 10; //相同属性产品是否关联；0->不关联；1->关联
+    int64 hand_add_status = 11; //是否支持手动新增；0->不支持；1->支持
+    int64 type = 12; //属性的类型；0->规格；1->参数
+}
+
+message Error {
+    int32 code = 1;
+    string message = 2;
+}
+message In_GetProductAttributeById {
+    int64 id = 1;
+}
+
+message Out_GetProductAttributeById {
+    Error error = 1;
+    Product_attribute product_attribute = 2;
+}
+
+message Out_UpdateProductAttributeInfo {
+    Error error = 1;
+    Product_attribute product_attribute = 2;
+}
+
+message In_UpdateProductAttributeInfo {
+    Product_attribute product_attribute = 1;
+}
+
+message In_GetProductAttributeList{
+    int64 cid=1;
+    int64 type_value=2;
+}
+
+message In_GetProductAttributes {
+    int64 limit = 1;
+    int64 pages = 2;
+    string search_key = 3;
+    string start_time = 4;
+    string end_time = 5;
+}
+
+message Out_GetProductAttributes {
+    Error error = 1;
+    int64 limit = 2;
+    int64 pages = 3;
+    int64 total = 4;
+    repeated Product_attribute product_attribute_list = 5;
+}
+
+message Out_GetProductAttributeList {
+    Error error = 1;
+    int64 limit = 2;
+    int64 pages = 3;
+    int64 total = 4;
+    repeated Product_attribute product_attribute_list = 5;
+}
+
+message In_DeleteProductAttributes {
+    repeated int64 product_attribute_list = 1;
+}
+
+message Out_DeleteProductAttributes {
+    Error error = 1;
+}
+
+
+message In_CreateProductAttribute {
+    Product_attribute product_attribute = 1;
+}
+message Out_CreateProductAttribute {
+    Error error = 1;
+    Product_attribute product_attribute = 2;
+}

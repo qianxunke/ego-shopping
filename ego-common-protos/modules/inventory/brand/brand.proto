@@ -1,0 +1,100 @@
+syntax="proto3";
+
+option go_package = "go_out/inventory/brand";  //输出作为输出路径
+option java_multiple_files = true;
+option java_package = "com.qianxunke.ego.inventory.brand";
+option java_outer_classname = "Brand";
+
+package brand;
+
+service BrandHandler {
+    //获取信息
+    rpc GetBrandById (In_GetBrandById) returns (Out_GetBrandById) {
+    }
+    //修改信息
+    rpc UpdateBrandInfo (In_UpdateBrandInfo) returns (Out_UpdateBrandInfo) {
+    }
+    //获取列表
+    rpc GetBrands (In_GetBrands) returns (Out_GetBrands) {
+    }
+    //删除列表
+    rpc DeleteBrands (In_DeleteBrands) returns (Out_DeleteBrands) {
+    }
+    //新建信息
+    rpc CreateBrand (In_CreateBrand) returns (Out_CreateBrand) {
+    }
+}
+
+//sku的库存
+message Brand {
+    int64 id = 1;
+    string name = 2; //
+    string first_letter = 3; //'首字母
+    int64 sort = 4; //排序
+    int64 factory_status = 5; //'是否为品牌制造商：0->不是；1->是'
+    int64 show_status = 6; //销售属性1
+    int64 product_count = 7; //'产品数量'
+    int64 product_comment_count = 8; //'产品评论数量'
+    string logo = 9; //品牌logo
+    string big_pic = 10; //专区大图
+    string brand_story = 11; //品牌故事
+    string created_time=12;
+}
+
+message Error {
+    int32 code = 1;
+    string message = 2;
+}
+message In_GetBrandById {
+    int64 id = 1;
+}
+
+message Out_GetBrandById {
+    Error error = 1;
+    Brand brand = 2;
+}
+
+message Out_UpdateBrandInfo {
+    Error error = 1;
+    Brand brand = 2;
+}
+
+message In_UpdateBrandInfo {
+    Brand brand = 1;
+}
+
+
+message In_GetBrands {
+    int64 limit = 1;
+    int64 pages = 2;
+    string search_key = 3;
+    string start_time = 4;
+    string end_time = 5;
+}
+
+message Out_GetBrands {
+    Error error = 1;
+    int64 limit = 2;
+    int64 pages = 3;
+    int64 total = 4;
+    repeated Brand brand_list = 5;
+}
+
+message In_DeleteBrands {
+    repeated int64  brand_list = 1;
+}
+
+message Out_DeleteBrands {
+    Error error = 1;
+}
+
+
+message In_CreateBrand {
+    Brand brand = 1;
+}
+message Out_CreateBrand {
+    Error error = 1;
+    Brand brand = 2;
+}
+
+

@@ -1,0 +1,95 @@
+syntax = "proto3";
+
+option go_package = "go_out/inventory/product_vertify_record";  //输出作为输出路径
+option java_multiple_files = true;
+option java_package = "com.qianxunke.ego.inventory.product_vertify_record";
+option java_outer_classname = "ProductVertifyRecord";
+
+package product_vertify_record;
+
+service ProductVertifyRecordHandler {
+    //获取信息
+    rpc GetProductVertifyRecordById (In_GetProductVertifyRecordById) returns (Out_GetProductVertifyRecordById) {
+    }
+    //修改信息
+    rpc UpdateProductVertifyRecordInfo (In_UpdateProductVertifyRecordInfo) returns (Out_UpdateProductVertifyRecordInfo) {
+    }
+    //获取列表
+    rpc GetProductVertifyRecords (In_GetProductVertifyRecords) returns (Out_GetProductVertifyRecords) {
+    }
+    //删除列表
+    rpc DeleteProductVertifyRecords (In_DeleteProductVertifyRecords) returns (Out_DeleteProductVertifyRecords) {
+    }
+    //新建信息
+    rpc CreateProductVertifyRecord (In_CreateProductVertifyRecord) returns (Out_CreateProductVertifyRecord) {
+    }
+}
+
+//商品审核记录
+message Product_vertify_record {
+    int64 id = 1;
+    string product_id = 2; //品牌ID
+    string create_time = 3;
+    string vertify_man = 4; //审核人
+    int64 status = 5;
+    string detail = 6; //反馈详情
+}
+
+message Error {
+    int32 code = 1;
+    string message = 2;
+}
+message In_GetProductVertifyRecordById {
+    int64 id = 1;
+}
+
+message Out_GetProductVertifyRecordById {
+    Error error = 1;
+    Product_vertify_record product_vertify_record = 2;
+}
+
+message Out_UpdateProductVertifyRecordInfo {
+    Error error = 1;
+    Product_vertify_record product_vertify_record = 2;
+}
+
+message In_UpdateProductVertifyRecordInfo {
+    Product_vertify_record product_vertify_record = 1;
+}
+
+
+message In_GetProductVertifyRecords {
+    int64 limit = 1;
+    int64 pages = 2;
+    string search_key = 3;
+    string start_time = 4;
+    string end_time = 5;
+}
+
+message Out_GetProductVertifyRecords {
+    Error error = 1;
+    int64 limit = 2;
+    int64 pages = 3;
+    int64 total = 4;
+    repeated Product_vertify_record product_vertify_record_list = 5;
+}
+
+message In_DeleteProductVertifyRecords {
+    repeated int64 product_vertify_record_list = 1;
+}
+
+message Out_DeleteProductVertifyRecords {
+    Error error = 1;
+}
+
+
+message In_CreateProductVertifyRecord {
+    Product_vertify_record product_vertify_record = 1;
+}
+message Out_CreateProductVertifyRecord {
+    Error error = 1;
+    Product_vertify_record product_vertify_record = 2;
+}
+
+
+
