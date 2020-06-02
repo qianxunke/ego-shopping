@@ -2,13 +2,13 @@ package dao
 
 import (
 	"errors"
-	"github.com/shopspring/decimal"
-	"golang.org/x/tools/go/ssa/interp/testdata/src/fmt"
-	"qianxunke/basic/utils/string_utl"
-	"qianxunke/basic/utils/time_util"
-	"inventory-service/modules/product_sku_stock/bean"
+	"fmt"
 	productSkuStockProto "github.com/qianxunke/ego-shopping/ego-common-protos/go_out/inventory/product_sku_stock"
 	"github.com/qianxunke/ego-shopping/ego-plugins/db"
+	"github.com/shopspring/decimal"
+	"inventory-service/modules/product_sku_stock/bean"
+	"inventory-service/utils/string_utl"
+	"inventory-service/utils/time_util"
 )
 
 func (dao *daoIml) FindById(id int64) (product *productSkuStockProto.ProductSkuStock, err error) {
@@ -70,7 +70,7 @@ func (dao *daoIml) UpdateStock(id int64, productId string, memberId int64, stock
 		if re := recover(); re != nil {
 			tx.Rollback()
 			if err == nil {
-				err = errors.New(fmt.Printf("%v", re))
+				err = errors.New(fmt.Sprintf("%v", re))
 			}
 		} else {
 			if err != nil {
@@ -108,19 +108,19 @@ func (dao *daoIml) UpdateStock(id int64, productId string, memberId int64, stock
 		//	totalPrice:=stockNum*skuStock.PromotionPrice
 		numDecimal, err := decimal.NewFromString(string_utl.Int64ToString(stockNum))
 		if err != nil {
-			return
+			return nil, err
 		}
 		unitPrice, err := decimal.NewFromString(string_utl.Float32ToFloat32String(skuStock.PromotionPrice))
 		if err != nil {
-			return
+			return nil, err
 		}
 		sValue, err := numDecimal.Mul(unitPrice).Value()
 		if err != nil {
-			return
+			return nil, err
 		}
 		value, err := string_utl.Float64StringToFloat32(sValue.(string))
 		if err != nil {
-			return
+			return nil, err
 		}
 		//生成销库记录
 		sellStockLog := &bean.Sku_out_log{
@@ -128,20 +128,20 @@ func (dao *daoIml) UpdateStock(id int64, productId string, memberId int64, stock
 			SkuPrice:    skuStock.PromotionPrice,
 			SkuId:       id,
 			TotalAmount: value,
-			CreateTime:  time_util.GetCurrentTime(),
+			CreateTime:  time_util.GetCurrentTime(time_util.Layout_Standard),
 			MemberId:    memberId,
 		}
 		err = tx.Create(&sellStockLog).Error
 		if err != nil {
-			return
+			return nil, err
 		}
 		rsp = &productSkuStockProto.SkuOutLog{}
 		//获取销库信息
 		r := tx.Where("sku_id = ? and member_id = ? and create_id = ?", sellStockLog.SkuId, sellStockLog.MemberId, sellStockLog.CreateTime).First(&rsp).RowsAffected
 		if r == 0 {
 			err = errors.New("get sell stock out error")
-			return
+			return nil, err
 		}
-		return
+		return rsp, nil
 	}
 }

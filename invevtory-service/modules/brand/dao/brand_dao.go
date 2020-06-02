@@ -39,5 +39,6 @@ func Init() {
 	if dao != nil {
 		return
 	}
+
 	dao = &productDaoIml{}
 }

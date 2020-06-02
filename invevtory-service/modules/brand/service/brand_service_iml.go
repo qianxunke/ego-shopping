@@ -2,15 +2,15 @@ package service
 
 import (
 	"context"
-	"github.com/micro/go-micro/util/log"
-	"net/http"
-	brandDao "inventory-service/modules/brand/dao"
+	"github.com/go-log/log"
 	branProto "github.com/qianxunke/ego-shopping/ego-common-protos/go_out/inventory/brand"
+	brandDao "inventory-service/modules/brand/dao"
+	"net/http"
 	"reflect"
 )
 
 //获取信息
-func (s *service) GetBrandById(ctx context.Context,req *branProto.In_GetBrandById) (rsp *branProto.Out_GetBrandById,err error) {
+func (s *service) GetBrandById(ctx context.Context, req *branProto.In_GetBrandById) (rsp *branProto.Out_GetBrandById, err error) {
 	rsp = &branProto.Out_GetBrandById{}
 	rsp.Error = &branProto.Error{}
 	if req.Id <= 0 {
@@ -45,7 +45,7 @@ func (s *service) GetBrandById(ctx context.Context,req *branProto.In_GetBrandByI
 }
 
 //修改信息
-func (s *service) UpdateBrandInfo(ctx context.Context,req *branProto.In_UpdateBrandInfo) (rsp *branProto.Out_UpdateBrandInfo,err error) {
+func (s *service) UpdateBrandInfo(ctx context.Context, req *branProto.In_UpdateBrandInfo) (rsp *branProto.Out_UpdateBrandInfo, err error) {
 	rsp = &branProto.Out_UpdateBrandInfo{}
 	updataData := map[string]interface{}{}
 	elem := reflect.ValueOf(&req.Brand).Elem()
@@ -78,7 +78,7 @@ func (s *service) UpdateBrandInfo(ctx context.Context,req *branProto.In_UpdateBr
 }
 
 //获取列表
-func (s *service) GetBrands(ctx context.Context,req *branProto.In_GetBrands) (rsp *branProto.Out_GetBrands,err error) {
+func (s *service) GetBrands(ctx context.Context, req *branProto.In_GetBrands) (rsp *branProto.Out_GetBrands, err error) {
 	rsp = &branProto.Out_GetBrands{}
 	//对参数鉴权
 	if req.Limit == 0 {
@@ -127,7 +127,7 @@ func (s *service) GetBrands(ctx context.Context,req *branProto.In_GetBrands) (rs
 }
 
 //删除列表
-func (s *service) DeleteBrands(ctx context.Context,req *branProto.In_DeleteBrands) (rsp *branProto.Out_DeleteBrands,err error) {
+func (s *service) DeleteBrands(ctx context.Context, req *branProto.In_DeleteBrands) (rsp *branProto.Out_DeleteBrands, err error) {
 	rsp = &branProto.Out_DeleteBrands{}
 	if len(req.BrandList) <= 0 {
 		rsp.Error = &branProto.Error{
@@ -160,7 +160,7 @@ func (s *service) DeleteBrands(ctx context.Context,req *branProto.In_DeleteBrand
 }
 
 //新建信息
-func (s *service) CreateBrand(ctx context.Context,req *branProto.In_CreateBrand) (rsp *branProto.Out_CreateBrand,err error) {
+func (s *service) CreateBrand(ctx context.Context, req *branProto.In_CreateBrand) (rsp *branProto.Out_CreateBrand, err error) {
 	rsp = &branProto.Out_CreateBrand{}
 	//查询该等级是否存在
 	dao, err := brandDao.GetBrandDao()

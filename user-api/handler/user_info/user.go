@@ -6,7 +6,7 @@ import (
 	"google.golang.org/grpc"
 	"user-api/common"
 
-	"github.com/qianxunke/ego-shopping/ego-common-protos/out/user_info"
+	"github.com/qianxunke/ego-shopping/ego-common-protos/go_out/user/user_info"
 	"net/http"
 	"user-api/common/api_common"
 )

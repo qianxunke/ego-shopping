@@ -2,14 +2,14 @@ package service
 
 import (
 	"context"
-	"github.com/micro/go-micro/util/log"
-	"net/http"
-	productDao "inventory-service/modules/product/dao"
+	"github.com/go-log/log"
 	productProto "github.com/qianxunke/ego-shopping/ego-common-protos/go_out/inventory/product"
+	productDao "inventory-service/modules/product/dao"
+	"net/http"
 )
 
 //获取商品信息
-func (s *service) GetProductById(ctx context.Context,req *productProto.In_GetProductById) (rsp *productProto.Out_GetProductById,err error) {
+func (s *service) GetProductById(ctx context.Context, req *productProto.In_GetProductById) (rsp *productProto.Out_GetProductById, err error) {
 	rsp = &productProto.Out_GetProductById{}
 	rsp.Product = &productProto.ProductDetails{}
 	rsp.Error = &productProto.Error{}
@@ -44,7 +44,7 @@ func (s *service) GetProductById(ctx context.Context,req *productProto.In_GetPro
 }
 
 //修改信息
-func (s *service) UpdateProductInfo(ctx context.Context,req *productProto.In_UpdateProductInfo) (rsp *productProto.Out_UpdateProductInfo,err error) {
+func (s *service) UpdateProductInfo(ctx context.Context, req *productProto.In_UpdateProductInfo) (rsp *productProto.Out_UpdateProductInfo, err error) {
 	rsp = &productProto.Out_UpdateProductInfo{}
 	dao, err := productDao.GetProductDao()
 	if err != nil {
@@ -73,7 +73,7 @@ func (s *service) UpdateProductInfo(ctx context.Context,req *productProto.In_Upd
 }
 
 //获取列表
-func (s *service) GetProducts(ctx context.Context,req *productProto.In_GetProducts) (rsp *productProto.Out_GetProducts,err error) {
+func (s *service) GetProducts(ctx context.Context, req *productProto.In_GetProducts) (rsp *productProto.Out_GetProducts, err error) {
 	rsp = &productProto.Out_GetProducts{}
 	//对参数鉴权
 	if req.Limit == 0 {
@@ -122,7 +122,7 @@ func (s *service) GetProducts(ctx context.Context,req *productProto.In_GetProduc
 }
 
 //批量删除等级列表
-func (s *service) DeleteProducts(ctx context.Context,req *productProto.In_DeleteProducts) (rsp *productProto.Out_DeleteProducts,err error) {
+func (s *service) DeleteProducts(ctx context.Context, req *productProto.In_DeleteProducts) (rsp *productProto.Out_DeleteProducts, err error) {
 	rsp = &productProto.Out_DeleteProducts{}
 	if len(req.ProductList) <= 0 {
 		rsp.Error = &productProto.Error{
@@ -156,7 +156,7 @@ func (s *service) DeleteProducts(ctx context.Context,req *productProto.In_Delete
 }
 
 //新建信息
-func (s *service) CreateProduct(ctx context.Context,req *productProto.In_CreateProduct) (rsp *productProto.Out_CreateProduct,err error) {
+func (s *service) CreateProduct(ctx context.Context, req *productProto.In_CreateProduct) (rsp *productProto.Out_CreateProduct, err error) {
 	rsp = &productProto.Out_CreateProduct{}
 	//查询该等级是否存在
 	dao, err := productDao.GetProductDao()

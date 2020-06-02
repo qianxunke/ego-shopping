@@ -1,14 +1,13 @@
-package handler
+package wrapper
 
 import (
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"github.com/go-log/log"
+	"github.com/qianxunke/ego-shopping/ego-common-utils/api_common"
 	"net/http"
 	"strings"
-	"user-api/common"
-	"user-api/common/api_common"
 )
 
 //token 持有者
@@ -24,7 +23,7 @@ func AuthWrapper(c *gin.Context) {
 	log.Logf("[AuthWrapper]:请求 URL: %v", c.Request.RequestURI)
 	if IsInWileList(c.Request.RequestURI) {
 		//假如该请求是登陆后
-		ck := c.Request.Header.Get(common.RememberMeCookieName)
+		ck := c.Request.Header.Get(api_common.RememberMeCookieName)
 		// token不存在，则状态异常，无权限
 		if len(ck) > 0 {
 			claims, err := parseToken(ck)
@@ -34,7 +33,7 @@ func AuthWrapper(c *gin.Context) {
 		}
 		c.Next()
 	} else {
-		ck := c.Request.Header.Get(common.RememberMeCookieName)
+		ck := c.Request.Header.Get(api_common.RememberMeCookieName)
 		if len(ck) == 0 {
 			resonseEntity := &api_common.ResponseEntity{}
 			resonseEntity.Message = "token为空，请先登陆!"

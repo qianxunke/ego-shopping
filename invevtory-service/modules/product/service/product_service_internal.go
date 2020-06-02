@@ -1,9 +1,7 @@
 package service
 
 import (
-	"github.com/micro/go-micro/util/log"
-	//"qianxunke/es-srv/proto/product_es"
-	//"qianxunke/inventory-srv/clients"
+	"github.com/go-log/log"
 	productDao "inventory-service/modules/product/dao"
 	"reflect"
 	"strings"
@@ -34,20 +32,20 @@ func (s *service) sendAddProductMassageToEs(id string) (err error) {
 	}
 	//将 map 转换为指定的结构体
 	/*
-	item := &product_es.In_CreateProduct{}
-	item.Product = &product_es.Product{}
-	err = mapstructure.Decode(m, item.Product)
-	if err != nil {
-		log.Logf("error : %s", err)
-		return
-	}
-	err = clients.AddPusher.Publish(context.Background(), item)
-	if err != nil {
-		log.Logf("error : %s", err)
-		return
-	}
+		item := &product_es.In_CreateProduct{}
+		item.Product = &product_es.Product{}
+		err = mapstructure.Decode(m, item.Product)
+		if err != nil {
+			log.Logf("error : %s", err)
+			return
+		}
+		err = clients.AddPusher.Publish(context.Background(), item)
+		if err != nil {
+			log.Logf("error : %s", err)
+			return
+		}
 
-	 */
+	*/
 	return
 }
 
@@ -76,20 +74,20 @@ func (s *service) sendUpdateProductMassageToEs(id string) (err error) {
 	}
 	//将 map 转换为指定的结构体
 	/*
-	item := &product_es.In_UpdateProductInfo{}
-	item.Product = &product_es.Product{}
-	err = mapstructure.Decode(m, item.Product)
-	if err != nil {
-		log.Logf("error : %s", err)
-		return
-	}
-	err = clients.UpdateProductPusher.Publish(context.Background(), item)
-	if err != nil {
-		log.Logf("error : %s", err)
-		return
-	}
+		item := &product_es.In_UpdateProductInfo{}
+		item.Product = &product_es.Product{}
+		err = mapstructure.Decode(m, item.Product)
+		if err != nil {
+			log.Logf("error : %s", err)
+			return
+		}
+		err = clients.UpdateProductPusher.Publish(context.Background(), item)
+		if err != nil {
+			log.Logf("error : %s", err)
+			return
+		}
 
-	 */
+	*/
 	return
 }
 
@@ -100,13 +98,13 @@ func (s *service) sendDeleteProductMassageToEs(ids []string) (err error) {
 		}
 	}()
 	/*
-	msg := &product_es.In_DeleteProducts{}
-	msg.ProductList = ids
-	err = clients.DeleteProductPusher.Publish(context.Background(), msg)
-	if err != nil {
-		log.Logf("error : %s", err)
-		return
-	}
-	 */
+		msg := &product_es.In_DeleteProducts{}
+		msg.ProductList = ids
+		err = clients.DeleteProductPusher.Publish(context.Background(), msg)
+		if err != nil {
+			log.Logf("error : %s", err)
+			return
+		}
+	*/
 	return
 }

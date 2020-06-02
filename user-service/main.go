@@ -4,7 +4,7 @@ import (
 	"ego-user-service/clients"
 	"ego-user-service/modules"
 	"ego-user-service/modules/user_info/service"
-	"github.com/qianxunke/ego-shopping/ego-common-protos/out/user_info"
+	"github.com/qianxunke/ego-shopping/ego-common-protos/go_out/user/user_info"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 	"log"
@@ -15,7 +15,7 @@ func main() {
 	//初始化
 	clients.Init()
 	modules.Init()
-	lis, err := net.Listen("tcp", "localhost:8080")
+	lis, err := net.Listen("tcp", "localhost:8081")
 	if err != nil {
 		log.Fatalf("err: v", err)
 		return
@@ -31,7 +31,7 @@ func main() {
 
 	reflection.Register(s)
 
-	log.Printf("Server started at port %s", 8080)
+	log.Printf("Server started at port %s", 8081)
 
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)

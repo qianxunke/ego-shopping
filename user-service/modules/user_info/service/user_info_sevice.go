@@ -2,11 +2,10 @@ package service
 
 import (
 	"fmt"
+	"github.com/qianxunke/ego-shopping/ego-common-protos/go_out/user/user_info"
 	"github.com/qianxunke/ego-shopping/ego-plugins/db"
 	"log"
 	"sync"
-
-	"github.com/qianxunke/ego-shopping/ego-common-protos/out/user_info"
 )
 
 var (
@@ -17,8 +16,6 @@ var (
 //service 服务
 type userInfoService struct {
 }
-
-
 
 func GetService() (*userInfoService, error) {
 	if s == nil {
@@ -34,12 +31,12 @@ func Init() {
 	if s != nil {
 		return
 	}
-	DB:=db.MasterEngine()
-	if DB==nil{
+	DB := db.MasterEngine()
+	if DB == nil {
 		log.Fatal("数据库初始化出错！")
 		return
 	}
-	if !DB.HasTable(&user_info.UserInf{}){
+	if !DB.HasTable(&user_info.UserInf{}) {
 		DB.CreateTable(&user_info.UserInf{})
 	}
 	s = &userInfoService{}

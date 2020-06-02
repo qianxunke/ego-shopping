@@ -2,6 +2,9 @@ package service
 
 import (
 	"fmt"
+	"github.com/qianxunke/ego-shopping/ego-common-protos/go_out/inventory/product_sku_stock"
+	"github.com/qianxunke/ego-shopping/ego-plugins/db"
+	"log"
 	"sync"
 )
 
@@ -9,11 +12,9 @@ type service struct {
 }
 
 var (
-	s    *service
-	m    sync.RWMutex
+	s *service
+	m sync.RWMutex
 )
-
-
 
 //获取服务
 func GetService() (*service, error) {
@@ -28,6 +29,14 @@ func Init() {
 	defer m.Unlock()
 	if s != nil {
 		return
+	}
+	DB := db.MasterEngine()
+	if DB == nil {
+		log.Fatal("数据库初始化出错！")
+		return
+	}
+	if !DB.HasTable(&product_sku_stock.ProductSkuStock{}) {
+		DB.CreateTable(&product_sku_stock.ProductSkuStock{})
 	}
 	s = &service{}
 }

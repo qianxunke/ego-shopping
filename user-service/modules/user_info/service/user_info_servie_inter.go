@@ -3,9 +3,9 @@ package service
 import (
 	"crypto/md5"
 	"ego-user-service/clients"
-	userInfoProto "github.com/qianxunke/ego-shopping/ego-common-protos/out/user_info"
 	"errors"
 	"fmt"
+	userInfoProto "github.com/qianxunke/ego-shopping/ego-common-protos/go_out/user/user_info"
 	"github.com/qianxunke/ego-shopping/ego-plugins/db"
 	"io"
 	"log"
@@ -156,14 +156,14 @@ func hideUserPrivate(user *userInfoProto.UserInf) (err error) {
 	return nil
 }
 
-func sendVerificationCode(phone string,ex int64) (err error) {
+func sendVerificationCode(phone string, ex int64) (err error) {
 	rnd := rand.New(rand.NewSource(time.Now().UnixNano()))
 	vcode := fmt.Sprintf("%06v", rnd.Int31n(1000000))
 	int6, err := strconv.ParseInt(vcode, 10, 64)
 	if err != nil {
 		return
 	}
-	log.Println("Send code : "+vcode)
+	log.Println("Send code : " + vcode)
 	//往redis写入验证码
 	err = clients.GetRedis().Do("SET", phone, int6, "Ex", ex).Err()
 	return

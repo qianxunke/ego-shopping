@@ -3,7 +3,7 @@ package user_level
 import (
 	"context"
 	"github.com/gin-gonic/gin"
-	"github.com/qianxunke/ego-shopping/ego-common-protos/out/user_level"
+	"github.com/qianxunke/ego-shopping/ego-common-protos/go_out/user/user_level"
 	"google.golang.org/grpc"
 	"user-api/common/api_common"
 )

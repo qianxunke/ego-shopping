@@ -4,14 +4,12 @@ import (
 	"context"
 	"ego-user-service/modules/access"
 	"ego-user-service/modules/user_info/dao"
-	"github.com/qianxunke/ego-shopping/ego-common-protos/out/user_info"
 	checkutil "ego-user-service/utils"
 	"errors"
+	"github.com/qianxunke/ego-shopping/ego-common-protos/go_out/user/user_info"
 	"net/http"
 	"time"
 )
-
-
 
 //用户登陆
 func (s *userInfoService) DoneUserLogin(ctx context.Context, req *user_info.InDoneUserLogin) (rsp *user_info.OutDoneUserLogin, err error) {
@@ -279,6 +277,3 @@ func (s *userInfoService) GetVerificationCode(ctx context.Context, req *user_inf
 	}
 	return
 }
-
-
-

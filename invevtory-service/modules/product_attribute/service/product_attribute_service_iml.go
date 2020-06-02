@@ -3,14 +3,14 @@ package service
 import (
 	"context"
 	"github.com/micro/go-micro/util/log"
-	"net/http"
-	productAttributeDao "inventory-service/modules/product_attribute/dao"
 	productAttributeProto "github.com/qianxunke/ego-shopping/ego-common-protos/go_out/inventory/product_attribute"
+	productAttributeDao "inventory-service/modules/product_attribute/dao"
+	"net/http"
 	"reflect"
 )
 
 //获取信息
-func (s *service) GetProductAttributeById(ctx context.Context,req *productAttributeProto.In_GetProductAttributeById) (rsp *productAttributeProto.Out_GetProductAttributeById,err error) {
+func (s *service) GetProductAttributeById(ctx context.Context, req *productAttributeProto.In_GetProductAttributeById) (rsp *productAttributeProto.Out_GetProductAttributeById, err error) {
 	rsp = &productAttributeProto.Out_GetProductAttributeById{}
 	rsp.Error = &productAttributeProto.Error{}
 	if req.Id <= 0 {
@@ -45,7 +45,7 @@ func (s *service) GetProductAttributeById(ctx context.Context,req *productAttrib
 }
 
 //修改信息
-func (s *service) UpdateProductAttributeInfo(ctx context.Context,req *productAttributeProto.In_UpdateProductAttributeInfo) (rsp *productAttributeProto.Out_UpdateProductAttributeInfo,err error) {
+func (s *service) UpdateProductAttributeInfo(ctx context.Context, req *productAttributeProto.In_UpdateProductAttributeInfo) (rsp *productAttributeProto.Out_UpdateProductAttributeInfo, err error) {
 	rsp = &productAttributeProto.Out_UpdateProductAttributeInfo{}
 	updataData := map[string]interface{}{}
 	elem := reflect.ValueOf(&req.ProductAttribute).Elem()
@@ -78,7 +78,7 @@ func (s *service) UpdateProductAttributeInfo(ctx context.Context,req *productAtt
 }
 
 //获取列表
-func (s *service) GetProductAttributes(ctx context.Context,req *productAttributeProto.In_GetProductAttributes) (rsp *productAttributeProto.Out_GetProductAttributes,err error) {
+func (s *service) GetProductAttributes(ctx context.Context, req *productAttributeProto.In_GetProductAttributes) (rsp *productAttributeProto.Out_GetProductAttributes, err error) {
 	rsp = &productAttributeProto.Out_GetProductAttributes{}
 	//对参数鉴权
 	if req.Limit == 0 {
@@ -127,7 +127,7 @@ func (s *service) GetProductAttributes(ctx context.Context,req *productAttribute
 }
 
 //删除列表
-func (s *service) DeleteProductAttributes(ctx context.Context,req *productAttributeProto.In_DeleteProductAttributes) (rsp *productAttributeProto.Out_DeleteProductAttributes,err error) {
+func (s *service) DeleteProductAttributes(ctx context.Context, req *productAttributeProto.In_DeleteProductAttributes) (rsp *productAttributeProto.Out_DeleteProductAttributes, err error) {
 	rsp = &productAttributeProto.Out_DeleteProductAttributes{}
 	if len(req.ProductAttributeList) <= 0 {
 		rsp.Error = &productAttributeProto.Error{
@@ -160,7 +160,7 @@ func (s *service) DeleteProductAttributes(ctx context.Context,req *productAttrib
 }
 
 //新建信息
-func (s *service) CreateProductAttribute(ctx context.Context,req *productAttributeProto.In_CreateProductAttribute) (rsp *productAttributeProto.Out_CreateProductAttribute,err error) {
+func (s *service) CreateProductAttribute(ctx context.Context, req *productAttributeProto.In_CreateProductAttribute) (rsp *productAttributeProto.Out_CreateProductAttribute, err error) {
 	rsp = &productAttributeProto.Out_CreateProductAttribute{}
 	//查询该等级是否存在
 	dao, err := productAttributeDao.GetDao()
@@ -186,7 +186,7 @@ func (s *service) CreateProductAttribute(ctx context.Context,req *productAttribu
 	return
 }
 
-func (s *service) GetProductAttributeList(req *productAttributeProto.In_GetProductAttributeList) (rsp *productAttributeProto.Out_GetProductAttributeList,err error) {
+func (s *service) GetProductAttributeList(ctx context.Context, req *productAttributeProto.In_GetProductAttributeList) (rsp *productAttributeProto.Out_GetProductAttributeList, err error) {
 	log.Log("Received ProductAttribute.GetProductAttributeList ")
 	rsp = &productAttributeProto.Out_GetProductAttributeList{}
 	dao, err := productAttributeDao.GetDao()

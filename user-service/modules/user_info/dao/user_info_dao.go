@@ -2,10 +2,10 @@ package dao
 
 import (
 	"ego-user-service/utils/uuid"
-	userInfoProto "github.com/qianxunke/ego-shopping/ego-common-protos/out/user_info"
 	"errors"
 	"fmt"
 	"github.com/go-log/log"
+	userInfoProto "github.com/qianxunke/ego-shopping/ego-common-protos/go_out/user/user_info"
 	"github.com/qianxunke/ego-shopping/ego-plugins/db"
 	"net/http"
 )
@@ -44,7 +44,7 @@ func GetUserInfoList(searchKey string, startTime string, endTime string, pages i
 		if len(startTime) > 0 && len(endTime) == 0 {
 			err = DB.Model(&userInfoProto.UserInf{}).Where("register_time > ?", endTime).Order("user_id desc").Count(&rsp.Total).Error
 			if err == nil && rsp.Total > 0 {
-				err = DB.Where("register_time > ? ", startTime).Order("user_id desc").Offset((- 1) * limit).Limit(limit).Find(&rsp.UserInfList).Error
+				err = DB.Where("register_time > ? ", startTime).Order("user_id desc").Offset((-1) * limit).Limit(limit).Find(&rsp.UserInfList).Error
 			}
 		} else if len(startTime) == 0 && len(endTime) > 0 {
 			err = DB.Model(&userInfoProto.UserInf{}).Where("register_time < ? ", endTime).Order("user_id desc").Count(&rsp.Total).Error
@@ -122,11 +122,8 @@ func GetUserInfoByPhoneOrUserName(mobilePhone string, userName string) (user *us
 }
 
 func Insert(user *userInfoProto.UserInf) (err error) {
-	user.UserId=uuid.GetUuid()
+	user.UserId = uuid.GetUuid()
 	DB := db.MasterEngine()
 	err = DB.Create(user).Error
 	return
 }
-
-
-
